@@ -41,7 +41,7 @@
 
 // let circle: Circle = new Circle(5);
 // let rectangle: Rectangle = new Rectangle(3, 4);
-
+// supports polymorphism tooo
 // console.log('Area of Circle: ', calculateTotalArea(circle));
 // console.log('Area of Rectangle: ', calculateTotalArea(rectangle));
 
@@ -56,48 +56,123 @@
 // console.log('Month: ', Month);
 // console.log('Current: ', Curr);
 
-//////Encapsulation
+/////////////////////////////////// Encapsulation
 //Bank Account
 // Depositing | withdrawing
 // // Balance hidden or encapsulated
 
-class BankAccount {
-  private _balance: number;
-  constructor(initialbalance: number) {
-    this._balance = initialbalance;
-  }
-  // Getter to get balance of bank account
+// class BankAccount {
+//   private _balance: number;
+//   constructor(initialbalance: number) {
+//     this._balance = initialbalance;
+//   }
+//   // Getter to get balance of bank account
 
-  public get balance(): number {
-    return this._balance;
-  }
+//   public get balance(): number {
+//     return this._balance;
+//   }
 
-  // Method deposits money
-  public deposit(amount: number): void {
-    if (amount < 0) {
-      console.log('Invalid deposit amount');
-      return;
-    }
-    this._balance += amount;
-  }
+//   // Method deposits money
+//   public deposit(amount: number): void {
+//     if (amount < 0) {
+//       console.log('Invalid deposit amount');
+//       return;
+//     }
+//     this._balance += amount;
+//   }
 
-  // Method withdraws money
-  public withdraw(amount: number): void {
-    if (amount < 0) {
-      console.log('Invalid withdrawal amount');
-      return;
-    }
-    if (this._balance - amount < 0) {
-      console.log('Insufficient funds');
-    }
-    this._balance -= amount;
+//   // Method withdraws money
+//   public withdraw(amount: number): void {
+//     if (amount < 0) {
+//       console.log('Invalid withdrawal amount');
+//       return;
+//     }
+//     if (this._balance - amount < 0) {
+//       console.log('Insufficient funds');
+//     }
+//     this._balance -= amount;
+//   }
+// }
+
+// const myAccount = new BankAccount(1000);
+// console.log(myAccount.balance);
+
+// myAccount.deposit(500);
+// myAccount.withdraw(280);
+
+// console.log('Last Balance: ', myAccount.balance);
+
+/// Balance property perfectly encapsulated
+
+///////////////////////Inheritance
+
+// class Animal {
+//   constructor(public name: string) {}
+//   move(distance: number): void {
+//     console.log(`${this.name} moved ${distance} meters`);
+//   }
+// }
+
+// class Dog extends Animal {
+//   constructor(public name: string = 'dog') {
+//     super(name);
+//   }
+// }
+
+// let myDog = new Dog();
+// myDog.move(5);
+// console.log(myDog);
+
+///////////// Inheritance Implementation
+
+class Product {
+  constructor(
+    public id: string,
+    public price: number,
+    public description: string,
+  ) {}
+  display(): void {
+    console.log(
+      `ID: ${this.id}, Price: ${this.price}, Description: ${this.description}`,
+    );
   }
 }
 
-const myAccount = new BankAccount(1000);
-console.log(myAccount.balance);
+class Book extends Product {
+  constructor(
+    public Author: string,
+    public Title: string,
+    public id: string,
+    public price: number,
+    public description: string,
+  ) {
+    super(id, price, description);
+  }
 
-myAccount.deposit(500);
-myAccount.withdraw(280);
+  display(): void {
+    // not necessary, it gets whatever parent fn do
+    super.display();
+    console.log(`Author: ${this.Author}, Title: ${this.Title}`);
+  }
+}
 
-console.log('Last Balance: ', myAccount.balance);
+class Electronic extends Product {
+  constructor(
+    public brand: string,
+    public model: string,
+    public id: string,
+    public price: number,
+    public description: string,
+  ) {
+    super(id, price, description);
+  }
+
+  display(): void {
+    // not necessary, it gets whatever parent fn do
+    super.display();
+    console.log(`Brand: ${this.brand}, Model: ${this.model}`);
+  }
+}
+
+let myBook = new Book('Akram', 'Ktab Hayaty', '1', 21, 'ktab mlyan hagat');
+myBook.display();
