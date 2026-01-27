@@ -46,11 +46,58 @@
 // console.log('Area of Rectangle: ', calculateTotalArea(rectangle));
 
 //////////////// Abstraction Implementation
+// real life implementation of abstraction, you just call these methods without worrying of the background implementation
 
-const today = new Date();
-const year = today.getFullYear();
-const Month = today.getMonth();
-const Curr = today.getDate();
-console.log('year: ', year);
-console.log('Month: ', Month);
-console.log('Current: ', Curr);
+// const today = new Date();
+// const year = today.getFullYear();
+// const Month = today.getMonth() + 1;
+// const Curr = today.getDate();
+// console.log('year: ', year);
+// console.log('Month: ', Month);
+// console.log('Current: ', Curr);
+
+//////Encapsulation
+//Bank Account
+// Depositing | withdrawing
+// // Balance hidden or encapsulated
+
+class BankAccount {
+  private _balance: number;
+  constructor(initialbalance: number) {
+    this._balance = initialbalance;
+  }
+  // Getter to get balance of bank account
+
+  public get balance(): number {
+    return this._balance;
+  }
+
+  // Method deposits money
+  public deposit(amount: number): void {
+    if (amount < 0) {
+      console.log('Invalid deposit amount');
+      return;
+    }
+    this._balance += amount;
+  }
+
+  // Method withdraws money
+  public withdraw(amount: number): void {
+    if (amount < 0) {
+      console.log('Invalid withdrawal amount');
+      return;
+    }
+    if (this._balance - amount < 0) {
+      console.log('Insufficient funds');
+    }
+    this._balance -= amount;
+  }
+}
+
+const myAccount = new BankAccount(1000);
+console.log(myAccount.balance);
+
+myAccount.deposit(500);
+myAccount.withdraw(280);
+
+console.log('Last Balance: ', myAccount.balance);
