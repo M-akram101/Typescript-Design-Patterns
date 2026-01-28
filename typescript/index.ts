@@ -125,54 +125,144 @@
 
 ///////////// Inheritance Implementation
 
-class Product {
-  constructor(
-    public id: string,
-    public price: number,
-    public description: string,
-  ) {}
-  display(): void {
-    console.log(
-      `ID: ${this.id}, Price: ${this.price}, Description: ${this.description}`,
-    );
-  }
-}
+// class Product {
+//   constructor(
+//     public id: string,
+//     public price: number,
+//     public description: string,
+//   ) {}
+//   display(): void {
+//     console.log(
+//       `ID: ${this.id}, Price: ${this.price}, Description: ${this.description}`,
+//     );
+//   }
+// }
 
-class Book extends Product {
-  constructor(
-    public Author: string,
-    public Title: string,
-    public id: string,
-    public price: number,
-    public description: string,
-  ) {
-    super(id, price, description);
-  }
+// class Book extends Product {
+//   constructor(
+//     public Author: string,
+//     public Title: string,
+//     public id: string,
+//     public price: number,
+//     public description: string,
+//   ) {
+//     super(id, price, description);
+//   }
 
-  display(): void {
-    // not necessary, it gets whatever parent fn do
-    super.display();
-    console.log(`Author: ${this.Author}, Title: ${this.Title}`);
-  }
-}
+//   display(): void {
+//     // not necessary, it gets whatever parent fn do
+//     super.display();
+//     console.log(`Author: ${this.Author}, Title: ${this.Title}`);
+//   }
+// }
 
-class Electronic extends Product {
-  constructor(
-    public brand: string,
-    public model: string,
-    public id: string,
-    public price: number,
-    public description: string,
-  ) {
-    super(id, price, description);
-  }
+// class Electronic extends Product {
+//   constructor(
+//     public brand: string,
+//     public model: string,
+//     public id: string,
+//     public price: number,
+//     public description: string,
+//   ) {
+//     super(id, price, description);
+//   }
 
-  display(): void {
-    // not necessary, it gets whatever parent fn do
-    super.display();
-    console.log(`Brand: ${this.brand}, Model: ${this.model}`);
-  }
-}
+//   display(): void {
+//     // not necessary, it gets whatever parent fn do
+//     super.display();
+//     console.log(`Brand: ${this.brand}, Model: ${this.model}`);
+//   }
+// }
 
-let myBook = new Book('Akram', 'Ktab Hayaty', '1', 21, 'ktab mlyan hagat');
-myBook.display();
+// let myBook = new Book('Akram', 'Ktab Hayaty', '1', 21, 'ktab mlyan hagat');
+// myBook.display();
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////// Solid design Patterns
+///// Single Responsibility Principle
+// class User {
+
+//   constructor(name:string, email:string){}
+// }
+
+// // If want to make user authentication , it will have a different class that implements that functionality, not a method inside User
+
+// class UserAuthentication {
+//   constructor(user:User){}
+//   authenticate(password:string){
+
+//   }
+// }
+
+// class BlogPost {
+//   title: string;
+//   content: string;
+
+//   constructor(title: string, content: string) {
+//     this.title = title;
+//     this.content = content;
+//   }
+
+//   createPost() {}
+//   updatePost() {}
+//   deletePost() {}
+//   // displayHTML() {
+//   //   return `<h1> ${this.title}</h1><p>${this.content}`;
+//   // }
+// }
+
+// class BlogPostDisplay {
+//   constructor(public blogPost: BlogPost) {}
+//   displayHTML() {
+//     return `<h1> ${this.blogPost.title}</h1><p>${this.blogPost.content}`;
+//   }
+// }
+
+// class BlogPostJSON {
+//   constructor(public blogPost: BlogPost) {}
+//   returnJSON() {
+//     return { title: this.blogPost.title, content: this.blogPost.content };
+//   }
+// }
+
+/////////////////////// Open-closed Principle
+/// regular -10 discount
+//// premium -20 // // //
+///////////////////// Bad example
+// class Discount {
+//   giveDiscount(customerType: 'premium' | 'regular'): number {
+//     if (customerType === 'regular') {
+//       return 10;
+//     }
+//     if (customerType === 'premium') {
+//       return 20;
+//     }
+//   }
+// }
+
+// interface Customer {
+//   giveDiscount(): number;
+// }
+
+// class RegularCustomer implements Customer {
+//   giveDiscount(): number {
+//     return 10;
+//   }
+// }
+
+// class PremiumCustomer implements Customer {
+//   giveDiscount(): number {
+//     return 20;
+//   }
+// }
+// // encapsulation+openclosed
+// class Discount {
+//   giveDiscount(customer: Customer): number {
+//     return customer.giveDiscount();
+//   }
+// }
+
+// let premiumCustomer: PremiumCustomer = new PremiumCustomer();
+// let discount: Discount = new Discount();
+
+// let finalvalue = discount.giveDiscount(premiumCustomer);
+// console.log(finalvalue);
