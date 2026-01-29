@@ -269,79 +269,252 @@
 // console.log(finalvalue);
 
 ////////////////////////////// Liskov Substitution principle
-abstract class Shape {
-  abstract calculateArea(): number;
-}
+// abstract class Shape {
+//   abstract calculateArea(): number;
+// }
 
-class Rectangle extends Shape {
-  constructor(
-    public width: number,
-    public height: number,
-  ) {
-    super();
+// class Rectangle extends Shape {
+//   constructor(
+//     public width: number,
+//     public height: number,
+//   ) {
+//     super();
+//   }
+//   public calculateArea(): number {
+//     return this.width * this.height;
+//   }
+// }
+
+// class Square extends Shape {
+//   constructor(public side: number) {
+//     super();
+//   }
+//   public calculateArea(): number {
+//     return this.side * this.side;
+//   }
+// }
+
+// function area(shape: Shape) {
+//   return shape.calculateArea();
+// }
+
+// let rectangle = new Rectangle(10, 12);
+// let square = new Square(8);
+// // implementing with sub type of shape rectangle, and square
+// area(rectangle);
+// area(square);
+
+// // real world implementation
+
+// // Payment Processor
+// // Credit Card
+// // Debit Card
+// // paypal
+
+// abstract class PaymentProcessor {
+//   abstract processPayment(amount: number): void;
+// }
+
+// class CreditCard extends PaymentProcessor {
+//   processPayment(amount: number): void {
+//     console.log(`Processing Credit Card Payments - Amount $${amount}`);
+//   }
+// }
+// class DebitCard extends PaymentProcessor {
+//   processPayment(amount: number): void {
+//     console.log(`Processing Debit Card Payments - Amount $${amount}`);
+//   }
+// }
+// class Paypal extends PaymentProcessor {
+//   processPayment(amount: number): void {
+//     console.log(`Processing Paypal Card Payments - Amount $${amount}`);
+//   }
+// }
+
+// function executePayment(
+//   paymentProcessor: PaymentProcessor,
+//   amount: number,
+// ): void {
+//   paymentProcessor.processPayment(amount);
+// }
+
+// let creditCardProcessor = new CreditCard();
+// let debitCardProcessor = new DebitCard();
+// let paypalCardProcessor = new Paypal();
+
+// executePayment(creditCardProcessor, 100);
+// executePayment(debitCardProcessor, 100);
+// executePayment(paypalCardProcessor, 50);
+//////////////////////////////// Interface Segregation Principle
+
+////////// Violates the principle, as simple printer will have to take all things in interface that it doesnt need to
+// interface Machine {
+//   print(document: Document): void;
+//   scan(document: Document): void;
+//   fax(document: Document): void;
+// }
+
+// class MultiFunctionalPrinter implements Machine {
+//   print(document: Document): void {
+//     console.log('Machine is printing');
+//   }
+//   scan(document: Document): void {
+//     console.log('Machine is scanning');
+//   }
+//   fax(document: Document): void {
+//     console.log('Machine is faxing');
+//   }
+// }
+//////////// right approach
+// interface Printer {
+//   print(document: Document): void;
+// }
+// interface Scanner {
+//   scan(document: Document): void;
+// }
+// interface FaxMaxhine {
+//   fax(document: Document): void;
+// }
+
+// class SimplePrinter implements Printer {
+//   print(document: Document): void {
+//     console.log('The Machine is Printing ');
+//   }
+// }
+
+// class MultiFunctionalPrinter implements Printer, Scanner, FaxMaxhine {
+//   print(document: Document): void {
+//     console.log('Machine is printing');
+//   }
+//   scan(document: Document): void {
+//     console.log('Machine is scanning');
+//   }
+//   fax(document: Document): void {
+//     console.log('Machine is faxing');
+//   }
+// }
+
+//// real world example
+
+/// creating posts
+// comenting posts
+// sharing posts
+// Admin
+// Regular
+
+// interface CreatePost {
+//   createPost(body: JSON): void;
+// }
+// interface CommentingPost {
+//   commentPost(comment: string): void;
+// }
+// interface SharingPost {
+//   sharePost(postId: number): void;
+// }
+
+// class Admin implements CreatePost, CommentingPost, SharingPost {
+//   createPost(body: JSON) {
+//     console.log('Post created');
+//   }
+//   commentPost(comment: string) {
+//     console.log('Coment Commented');
+//   }
+//   sharePost(postId: number) {
+//     console.log('Post shared');
+//   }
+// }
+
+// class RegularUser implements CommentingPost, SharingPost {
+
+//   commentPost(comment: string) {
+//     console.log('Coment Commented');
+//   }
+//   sharePost(postId: number) {
+//     console.log('Post shared');
+//   }
+// }
+
+// let akram = new Admin();
+// akram.commentPost('This is my post');
+// akram.createPost({ "id": "1" })
+
+///////////////////////////////////// Dependency Inversion Principle
+// violating the principle
+
+// class MySqlDatabase {
+//   save(data: string): void {
+
+//   }
+// }
+// class HighLevelModule {
+//   constructor(private database: MySqlDatabase){}
+
+//   execute(data: string){
+//     this.database.save(data)
+//   }
+// }
+
+// Right Implementation
+
+// interface IDatabase {
+//   save(data: string): void;
+// }
+
+// class MySqlDatabase implements IDatabase {
+//   save(data: string): void {
+//     console.log('data is being saved my mysql');
+//   }
+// }
+
+// class MongoDatabase implements IDatabase {
+//   save(data: string): void {
+//     console.log('data is being saved to Smongo');
+//   }
+// }
+// class HighLevelModule {
+//   constructor(private database: IDatabase) {}
+
+//   execute(data: string) {
+//     this.database.save(data);
+//   }
+// }
+
+// let mysql: MySqlDatabase = new MySqlDatabase();
+// let mongo: MongoDatabase = new MongoDatabase();
+// let user: HighLevelModule = new HighLevelModule(mysql);
+// user.execute("john"
+// )
+
+// let post: HighLevelModule = new HighLevelModule(mongo);
+// post.execute("New Pst")
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Gang of four dps
+// A- Creational Dps
+////////////////////Singleton
+class Singleton {
+  private static instance: Singleton;
+  private static _value: number;
+
+  private constructor() {}
+  public static getInstance(): Singleton {
+    if (!Singleton.instance) {
+      Singleton.instance = new Singleton();
+    }
+    return Singleton.instance;
   }
-  public calculateArea(): number {
-    return this.width * this.height;
+  set value(value: number) {
+    Singleton._value = value;
+  }
+  get value() {
+    return Singleton._value;
   }
 }
+let instance1 = Singleton.getInstance();
 
-class Square extends Shape {
-  constructor(public side: number) {
-    super();
-  }
-  public calculateArea(): number {
-    return this.side * this.side;
-  }
-}
+let instance2 = Singleton.getInstance();
 
-function area(shape: Shape) {
-  return shape.calculateArea();
-}
+instance1.value = 10;
 
-let rectangle = new Rectangle(10, 12);
-let square = new Square(8);
-// implementing with sub type of shape rectangle, and square
-area(rectangle);
-area(square);
-
-// real world implementation
-
-// Payment Processor
-// Credit Card
-// Debit Card
-// paypal
-
-abstract class PaymentProcessor {
-  abstract processPayment(amount: number): void;
-}
-
-class CreditCard extends PaymentProcessor {
-  processPayment(amount: number): void {
-    console.log(`Processing Credit Card Payments - Amount $${amount}`);
-  }
-}
-class DebitCard extends PaymentProcessor {
-  processPayment(amount: number): void {
-    console.log(`Processing Debit Card Payments - Amount $${amount}`);
-  }
-}
-class Paypal extends PaymentProcessor {
-  processPayment(amount: number): void {
-    console.log(`Processing Paypal Card Payments - Amount $${amount}`);
-  }
-}
-
-function executePayment(
-  paymentProcessor: PaymentProcessor,
-  amount: number,
-): void {
-  paymentProcessor.processPayment(amount);
-}
-
-let creditCardProcessor = new CreditCard();
-let debitCardProcessor = new DebitCard();
-let paypalCardProcessor = new Paypal();
-
-executePayment(creditCardProcessor, 100);
-executePayment(debitCardProcessor, 100);
-executePayment(paypalCardProcessor, 50);
+console.log(instance1.value);
+console.log(instance2.value);
