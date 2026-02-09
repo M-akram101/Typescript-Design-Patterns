@@ -1,9 +1,9 @@
-// /////////////////////////////// Abstraction
-// // Shapes
-// // Area, Perimeter
-// // simple - single function calculateTotalAre
+/////////////////////////////// Abstraction
+// Shapes
+// Area, Perimeter
+// simple - single function calculateTotalAre
 
-// // Interface A shape
+// Interface A shape
 
 // interface Shape {
 //   area(): number;
@@ -438,7 +438,7 @@
 // akram.commentPost('This is my post');
 // akram.createPost({ "id": "1" })
 
-///////////////////////////////////// Dependency Inversion Principle
+/////////////////////////////////// Dependency Inversion Principle
 // violating the principle
 
 // class MySqlDatabase {
@@ -454,7 +454,7 @@
 //   }
 // }
 
-// Right Implementation
+// // Right Implementation
 
 // interface IDatabase {
 //   save(data: string): void;
@@ -493,11 +493,14 @@
 // A- Creational Dps
 ////////////////////Singleton
 class Singleton {
+  // will always hold value of 1st object instantiated by this class
+
   private static instance: Singleton;
   private static _value: number;
 
   private constructor() {}
   public static getInstance(): Singleton {
+    // If not yet created, instantiate it
     if (!Singleton.instance) {
       Singleton.instance = new Singleton();
     }
@@ -518,3 +521,28 @@ instance1.value = 10;
 
 console.log(instance1.value);
 console.log(instance2.value);
+
+//// singleton logger class
+// log method
+// Can have multiple methods
+class Logger {
+  private static instance: Logger;
+  private constructor() {}
+  public static getInstance(): Logger {
+    if (!Logger.instance) {
+      Logger.instance = new Logger();
+    }
+    return Logger.instance;
+  }
+
+  public log(message: string): void {
+    const timestamp = new Date();
+    console.log(`[${timestamp.toLocaleString()} - ${message}]`);
+  }
+}
+
+let Logger1 = Logger.getInstance();
+Logger1.log('This is the first message');
+
+let logger2 = Logger.getInstance();
+logger2.log('this is the second message ');
